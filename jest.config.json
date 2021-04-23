@@ -1,0 +1,11 @@
+{
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!src/index.ts"
+  ],
+  "coverageDirectory": "tests/coverage",
+  "preset": "ts-jest",
+  "testEnvironment": "jest-environment-node",
+  "verbose": true
+}
