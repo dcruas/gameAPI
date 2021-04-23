@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+
+import Class from "./Class";
 
 @Entity()
 export default class Char {
@@ -8,6 +16,7 @@ export default class Char {
   @Column()
   nome!: string;
 
-  @Column()
-  classe!: string;
+  @OneToOne(() => Class)
+  @JoinColumn()
+  classe!: Class;
 }

@@ -1,6 +1,7 @@
 import { getRepository, ILike } from "typeorm";
 import { Router } from "express";
 import Char from "../entities/Char";
+import Class from "../entities/Class";
 
 const char = Router();
 
@@ -33,16 +34,23 @@ char.get("/c/:char", async (req, res) => {
 });
 
 char.post("/", async (req, res) => {
-  const tabela = getRepository(Char);
+  const tabelaChar = getRepository(Char);
+  const tabelaClass = getRepository(Class);
 
   const { body } = req;
 
+  const tempClass = await tabelaClass.findOne({ nome: body.classe });
+
+  if (!tempClass) {
+    return res.status(400).json({ erro: "Classe inexistente" });
+  }
+
   const newChar = new Char();
   newChar.nome = body.nome;
-  newChar.classe = body.classe;
+  newChar.classe = tempClass;
 
   try {
-    await tabela.save(newChar);
+    await tabelaChar.save(newChar);
   } catch (err) {
     res.status(500).json({ erro: err.message });
   }
